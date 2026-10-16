@@ -19,7 +19,7 @@ rng = np.random.default_rng(seed)
 z = rng.standard_normal(size=n) 
 
 # Generate prices of underlying asset at expiry.
-deterministic_term = (r - 0.2*sigma**2)*T
+deterministic_term = (r - 0.5*sigma**2)*T
 stochastic_term = sigma*np.sqrt(T)*z
 price_at_expiry = S0*np.exp(deterministic_term + stochastic_term)
 
@@ -67,7 +67,7 @@ plt.fill_between(sample_sizes,
 plt.xscale("log")
 plt.xlabel("Number of simulations (log scale)", fontsize=16)
 plt.ylabel("Estimated call price ($)", fontsize=16)
-plt.title("Simulated European Call Option with 95% Percentile Band", fontsize=16)
+plt.title("Simulated European Call Option with Approximate 95% Confidence Interval", fontsize=16)
 plt.legend(loc="lower right", frameon=True, fontsize=16)
 plt.tick_params(axis="both", labelsize=16)
 plt.grid(alpha=0.2)
