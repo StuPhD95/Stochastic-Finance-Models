@@ -40,13 +40,19 @@ The model generates multiple random walk trajectories over a fixed investment ho
 
 **European_Call_Monte_Carlo.py**
 
-The price of the underlying asset is assumed to follow geometric Brownian motion. The solution to this process is below. It was fun to derive. 
+The price of the underlying asset $S=S(t)$ at time $t$ is assumed to follow (risk-neutral) geometric Brownian motion, which is a continuous-time stochastic process described by the SDE 
 
- Geometric Brownian motion is a continuous-time stochastic process described by the SDE
+$$dS=\mu Sdt+\sigma SdW, \quad t\in[0,T],$$
+
+where $\mu$ is the drift, $\sigma$ is the volatility and $W=W(t)$ is a Wiener process. In plain English, we first simulate $i=1,\ldots,n$ expiry prices for the underlying asset at the terminal time $T>0$ using the solution to the above equation. Recall that a Wiener process has independent increments satisfying $W(t)-W(s)\sim N(0,t-s)$ for $t>s\geq 0$. At expiry, $t=T$ and if $s=0$ then $W(T)\sim N(0,T)$. We take $T=2$ meaning $S_i(2)\sim N(0,2)$, or by normalising, $S_i(2)\sim\sqrt{2}N(0,1)$. Next, we calculate the payoff of all $n$ call options using $\max(S_i(T)-K,0)$ where $K$ is the strike price (i.e. the price when an option can be exercised). We then take the mean of all such payoffs.
+
+![Geometric Brownian Motion](Figures/European_Call.png)
+
+
  
- $$dS=\mu Sdt+\sigma SdW, \quad t\in[0,T],$$
- 
-where $S=S(t)$ is the asset price at time $t$, $\mu$ is the drift, $\sigma$ is the volatility and $W=W(t)$ is a Wiener process. To derive the solution at the terminal time $T$, first let $f(s)=\ln(s)$ with $S=S(t)$ satisfying the above equation and $S(0)>0$. Using Ito's lemma, 
+The solution to the above SDE is derived below. It was a fun exercise. 
+
+To derive the solution at $T$, first let $f(s)=\ln(s)$ with $S=S(t)$ satisfying the above equation and $S(0)>0$. Using Ito's lemma, 
 
 $$df(S)=\frac{\partial f(S)}{\partial s}dS+\frac{1}{2}\frac{\partial^2f(S)}{\partial s^2}(dS)^2,$$
 
@@ -63,6 +69,3 @@ $$f(S(T))-f(S(0))=\left(\mu-\frac{\sigma^2}{2}\right)T+\sigma^2(W(T)-W(0))$$
 $$\ln\left(\frac{S(T)}{S(0)}\right)=\left(\mu-\frac{\sigma^2}{2}\right)T+\sigma^2W(T)$$
             
 $$S(T)=S(0)\exp\left(\left(\mu-\frac{\sigma^2}{2}\right)T+\sigma^2W(T)\right).$$
-
-
-![Geometric Brownian Motion](Figures/European_Call.png)
