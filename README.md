@@ -50,7 +50,7 @@ where $\mu$ is the drift, $\sigma$ is the volatility and $W=W(t)$ is a Wiener pr
 
 The solution to the equation for geometric Brownian motion is below. It was a fun exercise. 
 
-To derive the solution at $T$, first let $f(s)=\ln(s)$ with $S=S(t)$ satisfying the above equation and $S(0)>0$. Using Ito's lemma, 
+To derive the solution, we first let $f(s)=\ln(s)$ with $S=S(t)$ satisfying the above equation and $S(0)>0$. Using Ito's lemma, 
 
 $$df(S)=\frac{\partial f(S)}{\partial s}dS+\frac{1}{2}\frac{\partial^2f(S)}{\partial s^2}(dS)^2,$$
 
