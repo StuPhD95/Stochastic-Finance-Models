@@ -37,3 +37,32 @@ The model generates multiple random walk trajectories over a fixed investment ho
 ![Geometric Brownian Motion](Figures/Portfolio_Value1.png)
 
 ![Geometric Brownian Motion](Figures/Portfolio_Value2.png)
+
+**European_Call_Monte_Carlo.py**
+
+The price of the underlying asset is assumed to follow geometric Brownian motion. The solution to this process is below. It was fun to derive. 
+
+ Geometric Brownian motion is a continuous-time stochastic process described by the SDE
+ 
+ $$dS=\mu Sdt+\sigma SdW, \quad t\in[0,T],$$
+ 
+where $S=S(t)$ is the asset price at time $t$, $\mu$ is the drift, $\sigma$ is the volatility and $W=W(t)$ is a Wiener process. To derive the solution at the terminal time $T$, first let $f(s)=\ln(s)$ with $S=S(t)$ satisfying the above equation and $S(0)>0$. Using Ito's lemma, 
+
+$$df(S)=\frac{\partial f(S)}{\partial s}dS+\frac{1}{2}\frac{\partial^2f(S)}{\partial s^2}(dS)^2,$$
+
+or equivalently, 
+
+$$df(S)=\left(\mu-\frac{\sigma^2}{2}\right)dt+\sigma^2dW.$$
+
+Integrating both sides over the interval $[0,T]$ then gives
+
+$$\int_0^Tdf(S)=\left(\mu-\frac{\sigma^2}{2}\right)\int_0^Tdt+\sigma^2\int_0^TdW$$
+      
+$$f(S(T))-f(S(0))=\left(\mu-\frac{\sigma^2}{2}\right)T+\sigma^2(W(T)-W(0))$$
+            
+$$\ln\left(\frac{S(T)}{S(0)}\right)=\left(\mu-\frac{\sigma^2}{2}\right)T+\sigma^2W(T)$$
+            
+$$S(T)=S(0)\exp\left(\left(\mu-\frac{\sigma^2}{2}\right)T+\sigma^2W(T)\right).$$
+
+
+![Geometric Brownian Motion](Figures/European_Call.png)
