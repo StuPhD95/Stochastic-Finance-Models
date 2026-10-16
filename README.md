@@ -44,13 +44,11 @@ The price of the underlying asset $S=S(t)$ at time $t$ is assumed to follow (ris
 
 $$dS=\mu Sdt+\sigma SdW, \quad t\in[0,T],$$
 
-where $\mu$ is the drift, $\sigma$ is the volatility and $W=W(t)$ is a Wiener process. In plain English, we first simulate $i=1,\ldots,n$ expiry prices for the underlying asset at the terminal time $T>0$ using the solution to the above equation. Recall that a Wiener process has independent increments satisfying $W(t)-W(s)\sim N(0,t-s)$ for $t>s\geq 0$. At expiry, $t=T$ and if $s=0$ then $W(T)\sim N(0,T)$. We take $T=2$ meaning $S_i(2)\sim N(0,2)$, or by normalising, $S_i(2)\sim\sqrt{2}N(0,1)$. Next, we calculate the payoff of all $n$ call options using $\max(S_i(T)-K,0)$ where $K$ is the strike price (i.e. the price when an option can be exercised). We then take the mean of all such payoffs.
+where $\mu$ is the drift, $\sigma$ is the volatility and $W=W(t)$ is a Wiener process. In plain English, we first simulate $i=1,\ldots,n$ expiry prices for the underlying asset at the terminal time $T>0$ using the solution to the above equation. Recall that a Wiener process has independent increments satisfying $W(t)-W(s)\sim N(0,t-s)$ for all $t>s\geq 0$. At expiry, $t=T$ and if $s=0$ then $W_i(T)\sim N(0,T)$. For this example, we take $T=2$ meaning $W_i(2)\sim N(0,2)$, or by normalising, $W_i(2)\sim\sqrt{2}N(0,1)$. Next, we calculate all $n$ call options using $\max(S_i(T)-K,0)$ where $K$ is the strike price (i.e. the price when the call can be exercised). We then take the mean of all such payoffs. To find the price of the option today, i.e. when $t=0$, we set $\mu=r$ and compute the product $S_i(2)\times e^{-2r}$ where $r$ is the risk-free interest rate.
 
 ![Geometric Brownian Motion](Figures/European_Call.png)
 
-
- 
-The solution to the above SDE is derived below. It was a fun exercise. 
+The solution to the equation for geometric Brownian motion is below. It was a fun exercise. 
 
 To derive the solution at $T$, first let $f(s)=\ln(s)$ with $S=S(t)$ satisfying the above equation and $S(0)>0$. Using Ito's lemma, 
 
@@ -63,9 +61,9 @@ $$df(S)=\left(\mu-\frac{\sigma^2}{2}\right)dt+\sigma^2dW.$$
 Integrating both sides over the interval $[0,T]$ then gives
 
 $$\int_0^Tdf(S)=\left(\mu-\frac{\sigma^2}{2}\right)\int_0^Tdt+\sigma^2\int_0^TdW$$
-      
+
 $$f(S(T))-f(S(0))=\left(\mu-\frac{\sigma^2}{2}\right)T+\sigma^2(W(T)-W(0))$$
-            
+
 $$\ln\left(\frac{S(T)}{S(0)}\right)=\left(\mu-\frac{\sigma^2}{2}\right)T+\sigma^2W(T)$$
-            
+
 $$S(T)=S(0)\exp\left(\left(\mu-\frac{\sigma^2}{2}\right)T+\sigma^2W(T)\right).$$
